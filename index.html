@@ -16,7 +16,7 @@
     <style>
         body {
             font-family: 'Jua', sans-serif;
-            background-color: #fdf2f8; /* Very light pink bg */
+            background-color: #000000; /* Changed to Black */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,10 +27,10 @@
 
         .app-container {
             width: 400px;
-            height: 550px; /* Height increased to 550px */
+            height: 550px;
             background: white;
             border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1); /* Adjusted shadow for dark bg */
             position: relative;
             overflow: hidden;
             display: flex;
@@ -80,6 +80,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Fullscreen Toggle Button -->
+    <button onclick="toggleFullScreen()" class="fixed top-4 right-4 z-50 text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-800" title="전체화면">
+        <i data-lucide="expand" class="w-8 h-8"></i>
+    </button>
 
     <!-- Main App Container -->
     <div id="app" class="app-container border-4 border-white">
@@ -214,7 +219,7 @@
     <script>
         // --- Game State & Data ---
         const TOTAL_QUESTIONS = 20;
-        const TIME_LIMIT = 60; // Changed to 1 minute (60 seconds)
+        const TIME_LIMIT = 60; // 1 minute
         
         let state = {
             username: "",
@@ -231,6 +236,26 @@
         lucide.createIcons();
 
         // --- Core Logic ---
+
+        // Fullscreen Toggle
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Add Enter key support for username input
+        document.getElementById('username-input').addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                startGame();
+            }
+        });
 
         function startGame() {
             const nameInput = document.getElementById('username-input');
@@ -268,12 +293,10 @@
                 state.questions.push(generateMathProblem('choice'));
             }
 
-            // 2. Direct Input (10 questions) - increased from 6 to 10
+            // 2. Direct Input (10 questions)
             for (let i = 0; i < 10; i++) {
                 state.questions.push(generateMathProblem('input'));
             }
-
-            // Note: Word problems removed as requested
         }
 
         function generateMathProblem(type) {
@@ -447,10 +470,10 @@
 
             // Feedback Message
             const msg = document.getElementById('feedback-msg');
-            if (state.score === 100) msg.innerText = "완벽해요! 구구단 천재! 🏆";
-            else if (state.score >= 80) msg.innerText = "정말 잘했어요! 👏";
-            else if (state.score >= 50) msg.innerText = "노력하는 모습이 멋져요! 👍";
-            else msg.innerText = "조금 더 연습해볼까요? 화이팅! 🌱";
+            if (state.score === 100) msg.innerText = "완벽해요! 천재! 🏆";
+            else if (state.score >= 80) msg.innerText = "잘했어요! 👍";
+            else if (state.score >= 60) msg.innerText = "조금 더 노력해요. 👏";
+            else msg.innerText = "연습이 많이 필요해요.  🌱";
 
             // Switch Screens
             document.getElementById('game-screen').classList.add('hidden');
