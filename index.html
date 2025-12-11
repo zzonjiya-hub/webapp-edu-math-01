@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>구구단 게임 퀴즈 20</title>
+    <title>구구단 게임</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Jua (Cute Korean Font) -->
@@ -16,7 +16,7 @@
     <style>
         body {
             font-family: 'Jua', sans-serif;
-            background-color: #000000; /* Changed to Black */
+            background-color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,22 +27,23 @@
 
         .app-container {
             width: 400px;
-            height: 550px;
+            height: 600px;
             background: white;
             border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1); /* Adjusted shadow for dark bg */
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* Pastel Gradients & Colors */
-        .bg-pastel-blue { background-color: #A9DEF9; }
-        .bg-pastel-pink { background-color: #FFC8DD; }
-        .bg-pastel-yellow { background-color: #FDFFB6; }
-        .bg-pastel-green { background-color: #D0F4DE; }
-        .text-pastel-dark { color: #5D576B; }
+        /* New Pastel Palette: Lemon, Sky, Lilac */
+        .bg-pastel-lemon { background-color: #FFF59D; } /* Start Screen */
+        .bg-pastel-sky { background-color: #90CAF9; }   /* Game Header */
+        .bg-pastel-lilac { background-color: #CE93D8; } /* Result Screen */
+        .bg-pastel-coral { background-color: #FFCCBC; }
+        
+        .text-pastel-dark { color: #546E7A; }
 
         .btn-push {
             transition: transform 0.1s, box-shadow 0.1s;
@@ -55,8 +56,8 @@
         /* Input styling */
         input:focus {
             outline: none;
-            border-color: #A9DEF9;
-            box-shadow: 0 0 0 3px rgba(169, 222, 249, 0.4);
+            border-color: #90CAF9;
+            box-shadow: 0 0 0 3px rgba(144, 202, 249, 0.4);
         }
 
         /* Animations */
@@ -90,17 +91,17 @@
     <div id="app" class="app-container border-4 border-white">
         
         <!-- Screen 1: Start -->
-        <div id="start-screen" class="w-full h-full flex flex-col items-center justify-center bg-pastel-yellow p-6 text-center animate-pop">
+        <div id="start-screen" class="w-full h-full flex flex-col items-center justify-center bg-pastel-lemon p-6 text-center animate-pop">
             <div class="mb-8 text-pastel-dark">
-                <i data-lucide="calculator" class="w-20 h-20 mx-auto mb-4 text-pink-400"></i>
+                <i data-lucide="calculator" class="w-20 h-20 mx-auto mb-4 text-orange-400"></i>
                 <h1 class="text-4xl mb-2">구구단 게임</h1>
-                <h2 class="text-2xl text-pink-500">퀴즈 20</h2>
+                <h2 class="text-2xl text-orange-500">도전! 퀴즈 20</h2>
             </div>
             
             <div class="bg-white p-6 rounded-2xl shadow-sm w-full max-w-[320px]">
                 <label class="block text-gray-500 mb-2 text-lg">학생 이름</label>
                 <input type="text" id="username-input" class="w-full bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3 text-center text-xl mb-4" placeholder="이름을 입력해요">
-                <button onclick="startGame()" class="btn-push w-full bg-pastel-blue text-white py-3 rounded-xl text-xl shadow-md border-b-4 border-blue-300">
+                <button onclick="startGame()" class="btn-push w-full bg-pastel-sky text-white py-3 rounded-xl text-xl shadow-md border-b-4 border-blue-300 font-bold">
                     시작하기!
                 </button>
             </div>
@@ -109,7 +110,7 @@
         <!-- Screen 2: Game -->
         <div id="game-screen" class="w-full h-full hidden flex-col bg-white relative">
             <!-- Header: Timer & Progress -->
-            <div class="flex justify-between items-center p-4 bg-pastel-pink text-white">
+            <div class="flex justify-between items-center p-4 bg-pastel-sky text-white">
                 <div class="flex items-center gap-2">
                     <i data-lucide="clock" class="w-5 h-5"></i>
                     <!-- Initial display changed to 01:00 -->
@@ -122,7 +123,7 @@
 
             <!-- Progress Bar -->
             <div class="w-full h-2 bg-gray-100">
-                <div id="progress-bar" class="h-full bg-green-400 transition-all duration-300" style="width: 0%"></div>
+                <div id="progress-bar" class="h-full bg-blue-400 transition-all duration-300" style="width: 0%"></div>
             </div>
 
             <!-- Question Area -->
@@ -132,10 +133,10 @@
                 <!-- Math Question Format -->
                 <div id="math-q" class="text-5xl font-bold text-gray-700 mb-8 flex gap-4 items-center">
                     <span id="factor-a">7</span>
-                    <span class="text-pink-400">×</span>
+                    <span class="text-blue-400">×</span>
                     <span id="factor-b">8</span>
                     <span>=</span>
-                    <span class="w-16 h-16 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400">?</span>
+                    <span class="w-20 h-20 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400">?</span>
                 </div>
 
                 <!-- Input Area: Multiple Choice -->
@@ -168,17 +169,21 @@
         </div>
 
         <!-- Screen 3: Result -->
-        <div id="result-screen" class="w-full h-full hidden flex-col items-center justify-center bg-pastel-green p-4">
+        <div id="result-screen" class="w-full h-full hidden flex-col items-center justify-center bg-pastel-lilac p-4">
             
             <!-- Result Card (To be saved as image) -->
-            <div id="result-card" class="bg-white w-full max-w-[340px] rounded-2xl p-6 shadow-lg flex flex-col items-center text-center border-2 border-green-100 relative">
+            <div id="result-card" class="bg-white w-full max-w-[340px] rounded-2xl p-6 shadow-lg flex flex-col items-center text-center border-2 border-purple-100 relative">
                 
                 <!-- Decoration -->
-                <div class="absolute -top-6 bg-yellow-300 rounded-full p-3 border-4 border-white shadow-sm">
-                    <i data-lucide="trophy" class="w-8 h-8 text-yellow-700"></i>
+                <div class="absolute -top-6 bg-yellow-200 rounded-full p-3 border-4 border-white shadow-sm">
+                    <i data-lucide="trophy" class="w-8 h-8 text-yellow-600"></i>
                 </div>
 
                 <h2 class="text-2xl font-bold text-gray-700 mt-6 mb-1">학습 결과</h2>
+                
+                <!-- App Title -->
+                <p class="text-sm text-purple-400 font-bold mb-2">구구단 게임 : 도전! 퀴즈 20</p>
+
                 <div class="w-full border-b border-gray-100 my-2"></div>
                 
                 <div class="flex flex-col gap-2 w-full text-left bg-gray-50 p-4 rounded-xl mb-4">
@@ -188,11 +193,11 @@
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-500">점수</span>
-                        <span class="font-bold text-pink-500 text-lg"><span id="result-score">0</span> / 100점</span>
+                        <span class="font-bold text-purple-500 text-lg"><span id="result-score">0</span> / 100점</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-500">걸린 시간</span>
-                        <span id="result-time" class="font-bold text-blue-500">03:20</span>
+                        <span id="result-time" class="font-bold text-blue-600">03:20</span>
                     </div>
                     <div class="flex justify-between text-sm mt-2 pt-2 border-t border-gray-200">
                         <span class="text-gray-400">날짜</span>
@@ -200,7 +205,7 @@
                     </div>
                 </div>
 
-                <p id="feedback-msg" class="text-lg text-gray-600 font-bold mb-4">참 잘했어요! 🎉</p>
+                <p id="feedback-msg" class="text-lg text-gray-600 font-bold mb-1">참 잘했어요! 🎉</p>
             </div>
 
             <!-- Action Buttons -->
@@ -208,7 +213,7 @@
                 <button onclick="downloadImage()" class="btn-push flex-1 bg-white text-gray-600 py-3 rounded-xl border-2 border-gray-200 font-bold flex justify-center gap-2 items-center">
                     <i data-lucide="image-down" class="w-5 h-5"></i> 저장하기
                 </button>
-                <button onclick="resetGame()" class="btn-push flex-1 bg-pink-400 text-white py-3 rounded-xl shadow-md border-b-4 border-pink-500 font-bold flex justify-center gap-2 items-center">
+                <button onclick="resetGame()" class="btn-push flex-1 bg-purple-400 text-white py-3 rounded-xl shadow-md border-b-4 border-purple-500 font-bold flex justify-center gap-2 items-center">
                     <i data-lucide="rotate-ccw" class="w-5 h-5"></i> 다시하기
                 </button>
             </div>
@@ -219,7 +224,7 @@
     <script>
         // --- Game State & Data ---
         const TOTAL_QUESTIONS = 20;
-        const TIME_LIMIT = 60; // 1 minute
+        const TIME_LIMIT = 60; // 1 minute (60 seconds)
         
         let state = {
             username: "",
@@ -300,9 +305,12 @@
         }
 
         function generateMathProblem(type) {
-            // Difficulty: 3~9 * 3~9
-            const a = Math.floor(Math.random() * 7) + 3; // 3 to 9
-            const b = Math.floor(Math.random() * 7) + 3; // 3 to 9
+            // Difficulty: 1 digit * 1 digit (Times Table)
+            // 2 to 9
+            
+            const a = Math.floor(Math.random() * 8) + 2; // 2 to 9
+            const b = Math.floor(Math.random() * 9) + 1; // 1 to 9
+
             const ans = a * b;
             
             return {
@@ -346,6 +354,8 @@
             
             if (state.timeLeft < 30) {
                 document.getElementById('timer-display').classList.add('text-red-600');
+            } else {
+                document.getElementById('timer-display').classList.remove('text-red-600');
             }
         }
 
@@ -406,7 +416,7 @@
 
             options.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = 'btn-push bg-white border-2 border-pink-200 text-gray-700 py-4 rounded-xl text-2xl font-bold shadow-sm hover:bg-pink-50 hover:border-pink-300';
+                btn.className = 'btn-push bg-white border-2 border-blue-200 text-gray-700 py-4 rounded-xl text-2xl font-bold shadow-sm hover:bg-blue-50 hover:border-blue-300';
                 btn.innerText = opt;
                 btn.onclick = () => submitAnswer(opt);
                 area.appendChild(btn);
@@ -417,7 +427,7 @@
 
         function keypadInput(num) {
             const input = document.getElementById('direct-answer');
-            if (input.value.length < 3) { // Limit length
+            if (input.value.length < 3) { // Limit length decreased
                 input.value += num;
             }
         }
@@ -492,10 +502,23 @@
 
         function downloadImage() {
             const element = document.getElementById("result-card");
+            
+            // Generate filename: yymmdd-hhmmss.jpg
+            const now = new Date();
+            const yy = now.getFullYear().toString().slice(-2);
+            const mm = (now.getMonth() + 1).toString().padStart(2, '0');
+            const dd = now.getDate().toString().padStart(2, '0');
+            const hh = now.getHours().toString().padStart(2, '0');
+            const min = now.getMinutes().toString().padStart(2, '0');
+            const ss = now.getSeconds().toString().padStart(2, '0');
+            
+            const filename = `${yy}${mm}${dd}-${hh}${min}${ss}.jpg`;
+
             html2canvas(element, { scale: 2 }).then(canvas => {
                 const link = document.createElement("a");
-                link.download = `구구단퀴즈_${state.username}_결과.png`;
-                link.href = canvas.toDataURL();
+                link.download = filename;
+                // Save as JPEG
+                link.href = canvas.toDataURL("image/jpeg", 0.9);
                 link.click();
             });
         }
